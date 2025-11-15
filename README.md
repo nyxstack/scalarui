@@ -12,6 +12,14 @@ A Go package for embedding and serving [Scalar UI](https://scalar.com/) with cus
 * 🔥 **Optional Hot Reload** – Auto-refresh when your spec changes
 * 🛠️ **Developer Tools** – Built-in “Try It” request interface
 
+
+## Installation
+
+```bash
+go get github.com/nyxstack/scalarui
+```
+
+
 ## Quick Start
 
 ```go
