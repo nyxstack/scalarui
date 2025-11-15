@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{.Title}}{{if not .Title}}Scalar API Reference{{end}}</title>
+    {{if .Description}}
+    <meta name="description" content="{{.Description}}" />{{end}}
+    {{if .Favicon}}
+    <link rel="icon" type="image/x-icon" href="{{.Favicon}}" />{{end}}
+
+    {{if .CustomCSS}}
+    <style>
+        {
+                {
+                .CustomCSS
+            }
+        }
+    </style>
+    {{end}}
+
+    {{if .Variables}}
+    <style>
+        :root {
+                {
+                    {
+                    range $key,
+                    $value : =.Variables
+                }
+            }
+
+            -- {
+                    {
+                    $key
+                }
+            }
+
+            : {
+                    {
+                    $value
+                }
+            }
+
+            ;
+
+                {
+                    {
+                    end
+                }
+            }
+        }
+    </style>
+    {{end}}
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+    <script>
+        Scalar.createApiReference('#app', {{.ConfigJSON }})
+    </script>
+    <script>
+        function enableHotReload(endpoint, interval = 1500)
+        {
+            if (!endpoint || endpoint.trim() === "")
+            {
+                return;
+            }
+
+            let last = null;
+
+            async function poll()
+            {
+                try
+                {
+                    const res = await fetch(endpoint + "?_=" + Date.now());
+                    const body = await res.text();
+
+                    if (last !== null && body.trim() !== last.trim())
+                    {
+                        location.reload();
+                    }
+
+                    last = body.trim();
+                } catch (e) { }
+
+                setTimeout(poll, interval);
+            }
+
+            poll();
+        }
+
+        enableHotReload("{{.HotReloadURL}}");
+    </script>
+
+
+</body>
+
+</html>
